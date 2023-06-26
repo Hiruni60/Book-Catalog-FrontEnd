@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "../axios";
 import Box from '@mui/material/Box';
@@ -30,6 +30,7 @@ const Main=()=>{
     const [bookData,setData]=useState([""]);
     const [open, setOpen] = React.useState(false);
     const [open1, setOpen1] = React.useState(false);
+    const [books, setBooks] = React.useState([]);
   const handleOpen = () => setOpen(true);
   const handleOpen1 = () => setOpen1(true);
   const handleClose = () => setOpen(false);
@@ -38,6 +39,18 @@ const Main=()=>{
         if(evt.key==="Enter"){
             console.log("search")
         }
+    }
+
+    useEffect(() => {
+      getAll()
+    });
+
+    const getAll = ()=>{
+      axios.get("").then((res)=>{
+        setBooks(res.data.data);
+      }).catch((err)=>{
+        console.log(err);
+      })
     }
 
     return(
@@ -56,7 +69,7 @@ const Main=()=>{
             Text in a modal
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Duis mollis, est non commodo luctus, nis http://localhost:3000/i erat porttitor ligula.
           </Typography>
         </Box>
       </Modal>
@@ -78,16 +91,19 @@ const Main=()=>{
 
         </div>
         <div className="container">
+          {books.map((book)=>(
+            <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+          ))}
             
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
-                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
                 
+                {/* <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+                <button style={{marginTop:"200px"}} onClick={handleOpen}><Card book={bookData} /></button>
+                 */}
                
       <Modal
         open={open1}
